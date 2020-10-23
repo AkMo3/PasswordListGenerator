@@ -91,6 +91,7 @@ public class Main {
 			sc.close();
 		} catch (Exception e) {
 			System.out.println(e);
+			e.printStackTrace();
 		}
 
 		System.out.println("Written");
