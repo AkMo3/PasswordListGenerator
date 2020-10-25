@@ -2,6 +2,7 @@ package passwordGenerator;
 
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class Main {
@@ -13,6 +14,7 @@ public class Main {
 			ArrayList<String> Parameters = new ArrayList<String>();
 			ArrayList<String> Parameter_Value = new ArrayList<String>();
 			ArrayList<String> Integer_Value = new ArrayList<String>();
+			HashSet<String> Old_Passwords = new HashSet<String>();
 
 			AddParameter(Parameters, Parameter_Value, "Name");
 			AddParameter(Parameters, Parameter_Value, "Birthdate(DDMMYYYY)");
@@ -37,25 +39,33 @@ public class Main {
 					for (int j = i; j <= Birthdate.length(); j++) {
 						if (j >= i) {
 							String password = Parameter_Value.get(0) + Birthdate.substring(i, j);
-							fw.write(password);
-							fw.write("\n");
+							if (IsUnique(Old_Passwords, password)) {
+								fw.write(password);
+								fw.write("\n");
+							}
 							for (int len = 0; len < Parameter_Value.size(); len++) {
 								String name = Parameter_Value.get(len);
 								for (int s = 0; s < Special_Char.length; s++) {
 									password = name + Special_Char[s] + Birthdate.substring(i, j);
-									fw.write(password);
-									fw.write("\n");
-
-									if (name != name.toLowerCase()) {
-										password = name.toLowerCase() + Special_Char[s] + Birthdate.substring(i, j);
+									if (IsUnique(Old_Passwords, password)) {
 										fw.write(password);
 										fw.write("\n");
 									}
 
 									if (name != name.toLowerCase()) {
+										password = name.toLowerCase() + Special_Char[s] + Birthdate.substring(i, j);
+										if (IsUnique(Old_Passwords, password)) {
+											fw.write(password);
+											fw.write("\n");
+										}
+									}
+
+									if (name != name.toLowerCase()) {
 										password = name.toUpperCase() + Special_Char[s] + Birthdate.substring(i, j);
-										fw.write(password);
-										fw.write("\n");
+										if (IsUnique(Old_Passwords, password)) {
+											fw.write(password);
+											fw.write("\n");
+										}
 									}
 								}
 
@@ -63,21 +73,27 @@ public class Main {
 									for (int s2 = 0; s2 < Special_Char.length; s2++)
 										password = name + Special_Char[s1] + Birthdate.substring(i, j)
 												+ Special_Char[s1];
-									fw.write(password);
-									fw.write("\n");
+									if (IsUnique(Old_Passwords, password)) {
+										fw.write(password);
+										fw.write("\n");
+									}
 
 									if (name != name.toLowerCase()) {
 										password = name.toLowerCase() + Special_Char[s1] + Birthdate.substring(i, j)
 												+ Special_Char[s1];
-										fw.write(password);
-										fw.write("\n");
+										if (IsUnique(Old_Passwords, password)) {
+											fw.write(password);
+											fw.write("\n");
+										}
 									}
 
 									if (name != name.toUpperCase()) {
 										password = name.toUpperCase() + Special_Char[s1] + Birthdate.substring(i, j)
 												+ Special_Char[s1];
-										fw.write(password);
-										fw.write("\n");
+										if (IsUnique(Old_Passwords, password)) {
+											fw.write(password);
+											fw.write("\n");
+										}
 									}
 								}
 							}
@@ -91,7 +107,6 @@ public class Main {
 			sc.close();
 		} catch (Exception e) {
 			System.out.println(e);
-			e.printStackTrace();
 		}
 
 		System.out.println("Written");
@@ -129,6 +144,14 @@ public class Main {
 					+ Orignal_Birthdate.substring(4, 8);
 			Birthdate.add(Formated_DOB);
 		}
+	}
+
+	private static boolean IsUnique(HashSet<String> Old_Passwords, String New_Passwords) {
+		int size = Old_Passwords.size();
+		Old_Passwords.add(New_Passwords);
+		if (Old_Passwords.size() != size)
+			return true;
+		return false;
 	}
 
 }
