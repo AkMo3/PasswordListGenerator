@@ -26,8 +26,10 @@ public class Main {
 			AddParameter(Parameters, Parameter_Value, "Important Person");
 
 			char[] Special_Char = { '@', '$', '.', '/', ' ', ',', '&' };
+			
+			String Current_Path = System.getProperty("user.dir")+"\\"+"Password List"+"\\";
 
-			String file = "F:\\PasswordGenerator\\" + Parameter_Value.get(0) + ".txt";
+			String file = Current_Path + Parameter_Value.get(0) + ".txt";
 
 			fw = new FileWriter(file, true);
 
@@ -88,6 +90,7 @@ public class Main {
 			sc.close();
 		} catch (Exception e) {
 			System.out.println(e);
+			e.printStackTrace();
 		}
 
 		System.out.println("Written");
