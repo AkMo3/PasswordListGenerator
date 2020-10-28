@@ -7,13 +7,13 @@ public class Main {
   static Scanner sc = new Scanner(System.in);
   static FileWriter fw;
 
-  /** Defination of parameters.
-
-  * @param args Takes command line input. 
-  *
-  * @author Akash Mondal.
-  * @version 1.0. 
-  */ 
+  /**
+   * Defination of parameters.
+   *
+   * @param args Takes command line input.
+   * @author Akash Mondal.
+   * @version 1.0.
+   */
   public static void main(String[] args) {
     try {
       ArrayList<String> parameters = new ArrayList<String>();
@@ -30,7 +30,7 @@ public class Main {
       addparameter(parameters, parametervalue, "Mother's Name");
       addparameter(parameters, parametervalue, "Important Person");
 
-      char[] specialchar = { '@', '$', '.', '/', ' ', ',', '&' };
+      char[] specialchar = {'@', '$', '.', '/', ' ', ',', '&'};
       String currentpath = System.getProperty("user.dir") + "\\Password List\\";
 
       String file = currentpath + parametervalue.get(0) + ".txt";
@@ -47,7 +47,7 @@ public class Main {
               String password = parametervalue.get(0) + birthdate.substring(i, j);
               writeIfUnique(oldpasswords, password);
 
-              for (int len = 0; len < parametervalue.size(); len++) {              
+              for (int len = 0; len < parametervalue.size(); len++) {
                 String name = parametervalue.get(len);
                 for (int s = 0; s < specialchar.length; s++) {
                   password = name + specialchar[s] + birthdate.substring(i, j);
@@ -66,19 +66,24 @@ public class Main {
 
                 for (int s1 = 0; s1 < specialchar.length; s1++) {
                   for (int s2 = 0; s2 < specialchar.length; s2++) {
-                    password = name + specialchar[s1] + birthdate.substring(i, j) 
-                      + specialchar[s2];
+                    password = name + specialchar[s1] + birthdate.substring(i, j) + specialchar[s2];
                     writeIfUnique(oldpasswords, password);
 
                     if (name != name.toLowerCase()) {
-                      password = name.toLowerCase() + specialchar[s1] + birthdate.substring(i, j)
-                        + specialchar[s2];
+                      password =
+                          name.toLowerCase()
+                              + specialchar[s1]
+                              + birthdate.substring(i, j)
+                              + specialchar[s2];
                       writeIfUnique(oldpasswords, password);
                     }
 
                     if (name != name.toUpperCase()) {
-                      password = name.toUpperCase() + specialchar[s1] + birthdate.substring(i, j)
-                        + specialchar[s2];
+                      password =
+                          name.toUpperCase()
+                              + specialchar[s1]
+                              + birthdate.substring(i, j)
+                              + specialchar[s2];
                       writeIfUnique(oldpasswords, password);
                     }
                   }
@@ -100,8 +105,8 @@ public class Main {
     System.out.println("Written");
   }
 
-  private static void addparameter(ArrayList<String> parameter, ArrayList<String> parametervalue,
-      String parameterName) {
+  private static void addparameter(
+      ArrayList<String> parameter, ArrayList<String> parametervalue, String parameterName) {
     parameter.add(parameterName);
     System.out.println(parameterName);
     parametervalue.add(sc.nextLine());
@@ -125,11 +130,15 @@ public class Main {
     }
 
     if (orignalbirthdate.charAt(2) == '0' && orignalbirthdate.charAt(0) == '0') {
-      String formattedDob = orignalbirthdate.substring(1, 2) + orignalbirthdate.substring(3, 4)
-          + orignalbirthdate.substring(6, 8);
+      String formattedDob =
+          orignalbirthdate.substring(1, 2)
+              + orignalbirthdate.substring(3, 4)
+              + orignalbirthdate.substring(6, 8);
       birthdate.add(formattedDob);
-      formattedDob = orignalbirthdate.substring(1, 2) + orignalbirthdate.substring(3, 4)
-          + orignalbirthdate.substring(4, 8);
+      formattedDob =
+          orignalbirthdate.substring(1, 2)
+              + orignalbirthdate.substring(3, 4)
+              + orignalbirthdate.substring(4, 8);
       birthdate.add(formattedDob);
     }
   }
@@ -147,5 +156,4 @@ public class Main {
       }
     }
   }
-
 }
