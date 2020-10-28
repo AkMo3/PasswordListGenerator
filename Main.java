@@ -1,5 +1,3 @@
-package passwordGenerator;
-
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,79 +7,79 @@ public class Main {
   static Scanner sc = new Scanner(System.in);
   static FileWriter fw;
 
+  /** Defination of parameters.
+
+  * @param args Takes command line input. 
+  *
+  * @author Akash Mondal.
+  * @version 1.0. 
+  */ 
   public static void main(String[] args) {
     try {
-      ArrayList<String> Parameters = new ArrayList<String>();
-      ArrayList<String> Parameter_Value = new ArrayList<String>();
-      ArrayList<String> Integer_Value = new ArrayList<String>();
-      HashSet<String> Old_Passwords = new HashSet<String>();
+      ArrayList<String> parameters = new ArrayList<String>();
+      ArrayList<String> parametervalue = new ArrayList<String>();
+      ArrayList<String> integervalue = new ArrayList<String>();
+      HashSet<String> oldpasswords = new HashSet<String>();
 
-      AddParameter(Parameters, Parameter_Value, "Name");
-      AddParameter(Parameters, Parameter_Value, "Birthdate(DDMMYYYY)");
+      addparameter(parameters, parametervalue, "Name");
+      addparameter(parameters, parametervalue, "birthdate(DDMMYYYY)");
 
-      Integer_Value.add(Parameter_Value.get(1));
+      integervalue.add(parametervalue.get(1));
 
-      AddParameter(Parameters, Parameter_Value, "Father's Name");
-      AddParameter(Parameters, Parameter_Value, "Mother's Name");
-      AddParameter(Parameters, Parameter_Value, "Important Person");
+      addparameter(parameters, parametervalue, "Father's Name");
+      addparameter(parameters, parametervalue, "Mother's Name");
+      addparameter(parameters, parametervalue, "Important Person");
 
-      char[] Special_Char = {'@', '$', '.', '/', ' ', ',', '&'};
+      char[] specialchar = { '@', '$', '.', '/', ' ', ',', '&' };
+      String currentpath = System.getProperty("user.dir") + "\\Password List\\";
 
-      String Current_Path = System.getProperty("user.dir") + "\\" + "Password List" + "\\";
-
-      String file = Current_Path + Parameter_Value.get(0) + ".txt";
+      String file = currentpath + parametervalue.get(0) + ".txt";
 
       fw = new FileWriter(file, true);
 
-      FormatBirthdate(Integer_Value);
+      formatbirthdate(integervalue);
 
-      for (int k = 0; k < Integer_Value.size(); k++) {
-        String Birthdate = Integer_Value.get(k);
-        for (int i = 0; i < Birthdate.length(); i++) {
-          for (int j = i; j <= Birthdate.length(); j++) {
+      for (int k = 0; k < integervalue.size(); k++) {
+        String birthdate = integervalue.get(k);
+        for (int i = 0; i < birthdate.length(); i++) {
+          for (int j = i; j <= birthdate.length(); j++) {
             if (j >= i) {
-              String password = Parameter_Value.get(0) + Birthdate.substring(i, j);
-              WriteIfUnique(Old_Passwords, password);
+              String password = parametervalue.get(0) + birthdate.substring(i, j);
+              writeIfUnique(oldpasswords, password);
 
-              for (int len = 0; len < Parameter_Value.size(); len++) {
-                String name = Parameter_Value.get(len);
-                for (int s = 0; s < Special_Char.length; s++) {
-                  password = name + Special_Char[s] + Birthdate.substring(i, j);
-                  WriteIfUnique(Old_Passwords, password);
+              for (int len = 0; len < parametervalue.size(); len++) {              
+                String name = parametervalue.get(len);
+                for (int s = 0; s < specialchar.length; s++) {
+                  password = name + specialchar[s] + birthdate.substring(i, j);
+                  writeIfUnique(oldpasswords, password);
 
                   if (name != name.toLowerCase()) {
-                    password = name.toLowerCase() + Special_Char[s] + Birthdate.substring(i, j);
-                    WriteIfUnique(Old_Passwords, password);
+                    password = name.toLowerCase() + specialchar[s] + birthdate.substring(i, j);
+                    writeIfUnique(oldpasswords, password);
                   }
 
                   if (name != name.toLowerCase()) {
-                    password = name.toUpperCase() + Special_Char[s] + Birthdate.substring(i, j);
-                    WriteIfUnique(Old_Passwords, password);
+                    password = name.toUpperCase() + specialchar[s] + birthdate.substring(i, j);
+                    writeIfUnique(oldpasswords, password);
                   }
                 }
 
-                for (int s1 = 0; s1 < Special_Char.length; s1++) {
-                  for (int s2 = 0; s2 < Special_Char.length; s2++) {
-                    password =
-                        name + Special_Char[s1] + Birthdate.substring(i, j) + Special_Char[s2];
-                    WriteIfUnique(Old_Passwords, password);
+                for (int s1 = 0; s1 < specialchar.length; s1++) {
+                  for (int s2 = 0; s2 < specialchar.length; s2++) {
+                    password = name + specialchar[s1] + birthdate.substring(i, j) 
+                      + specialchar[s2];
+                    writeIfUnique(oldpasswords, password);
 
                     if (name != name.toLowerCase()) {
-                      password =
-                          name.toLowerCase()
-                              + Special_Char[s1]
-                              + Birthdate.substring(i, j)
-                              + Special_Char[s2];
-                      WriteIfUnique(Old_Passwords, password);
+                      password = name.toLowerCase() + specialchar[s1] + birthdate.substring(i, j)
+                        + specialchar[s2];
+                      writeIfUnique(oldpasswords, password);
                     }
 
                     if (name != name.toUpperCase()) {
-                      password =
-                          name.toUpperCase()
-                              + Special_Char[s1]
-                              + Birthdate.substring(i, j)
-                              + Special_Char[s2];
-                      WriteIfUnique(Old_Passwords, password);
+                      password = name.toUpperCase() + specialchar[s1] + birthdate.substring(i, j)
+                        + specialchar[s2];
+                      writeIfUnique(oldpasswords, password);
                     }
                   }
                 }
@@ -102,51 +100,46 @@ public class Main {
     System.out.println("Written");
   }
 
-  private static void AddParameter(
-      ArrayList<String> Parameter, ArrayList<String> Parameter_Value, String ParameterName) {
-    Parameter.add(ParameterName);
-    System.out.println(ParameterName);
-    Parameter_Value.add(sc.nextLine());
+  private static void addparameter(ArrayList<String> parameter, ArrayList<String> parametervalue,
+      String parameterName) {
+    parameter.add(parameterName);
+    System.out.println(parameterName);
+    parametervalue.add(sc.nextLine());
   }
 
-  private static void FormatBirthdate(ArrayList<String> Birthdate) {
+  private static void formatbirthdate(ArrayList<String> birthdate) {
 
-    String Orignal_Birthdate = Birthdate.get(0);
+    String orignalbirthdate = birthdate.get(0);
 
-    String Formated_birthdate =
-        Orignal_Birthdate.substring(0, 4) + Orignal_Birthdate.substring(6, 8);
-    Birthdate.add(Formated_birthdate);
+    String formatedBirthdate = orignalbirthdate.substring(0, 4) + orignalbirthdate.substring(6, 8);
+    birthdate.add(formatedBirthdate);
 
-    if (Orignal_Birthdate.charAt(0) == '0') {
-      String Formated_DOB = Orignal_Birthdate.substring(1);
-      Birthdate.add(Formated_DOB);
+    if (orignalbirthdate.charAt(0) == '0') {
+      String formattedDob = orignalbirthdate.substring(1);
+      birthdate.add(formattedDob);
     }
 
-    if (Orignal_Birthdate.charAt(2) == '0') {
-      String Formated_DOB = Orignal_Birthdate.substring(1);
-      Birthdate.add(Formated_DOB);
+    if (orignalbirthdate.charAt(2) == '0') {
+      String formattedDob = orignalbirthdate.substring(1);
+      birthdate.add(formattedDob);
     }
 
-    if (Orignal_Birthdate.charAt(2) == '0' && Orignal_Birthdate.charAt(0) == '0') {
-      String Formated_DOB =
-          Orignal_Birthdate.substring(1, 2)
-              + Orignal_Birthdate.substring(3, 4)
-              + Orignal_Birthdate.substring(6, 8);
-      Birthdate.add(Formated_DOB);
-      Formated_DOB =
-          Orignal_Birthdate.substring(1, 2)
-              + Orignal_Birthdate.substring(3, 4)
-              + Orignal_Birthdate.substring(4, 8);
-      Birthdate.add(Formated_DOB);
+    if (orignalbirthdate.charAt(2) == '0' && orignalbirthdate.charAt(0) == '0') {
+      String formattedDob = orignalbirthdate.substring(1, 2) + orignalbirthdate.substring(3, 4)
+          + orignalbirthdate.substring(6, 8);
+      birthdate.add(formattedDob);
+      formattedDob = orignalbirthdate.substring(1, 2) + orignalbirthdate.substring(3, 4)
+          + orignalbirthdate.substring(4, 8);
+      birthdate.add(formattedDob);
     }
   }
 
-  private static void WriteIfUnique(HashSet<String> Old_Passwords, String New_Password) {
-    int size = Old_Passwords.size();
-    Old_Passwords.add(New_Password);
-    if (Old_Passwords.size() != size) {
+  private static void writeIfUnique(HashSet<String> oldpasswords, String newPassword) {
+    int size = oldpasswords.size();
+    oldpasswords.add(newPassword);
+    if (oldpasswords.size() != size) {
       try {
-        fw.write(New_Password);
+        fw.write(newPassword);
         fw.write("\n");
       } catch (Exception e) {
         System.out.println(e);
@@ -154,4 +147,5 @@ public class Main {
       }
     }
   }
+
 }
