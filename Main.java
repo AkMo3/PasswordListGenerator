@@ -24,7 +24,7 @@ public class Main {
       addparameter(parameters, parameterValue, "Name");
       addparameter(parameters, parameterValue, "birthdate(DDMMYYYY)");
 
-      integerValue.add(parameterValue.get(1));
+      birthDateCheck(parameters, parameterValue, integerValue);
 
       addparameter(parameters, parameterValue, "Father's Name");
       addparameter(parameters, parameterValue, "Mother's Name");
@@ -135,6 +135,7 @@ public class Main {
               + orignalBirthdate.substring(3, 4)
               + orignalBirthdate.substring(6, 8);
       birthdate.add(formattedDob);
+
       formattedDob =
           orignalBirthdate.substring(1, 2)
               + orignalBirthdate.substring(3, 4)
@@ -154,6 +155,58 @@ public class Main {
         System.out.println(e);
         e.printStackTrace();
       }
+    }
+  }
+
+  private static void birthDateCheck(
+      ArrayList<String> parameters,
+      ArrayList<String> parameterValue,
+      ArrayList<String> integerValue) {
+
+    String birthDate = parameterValue.get(1);
+    boolean isValid = true;
+
+    if (birthDate.length() != 8) {
+      System.out.println("Invalid birthdate");
+      isValid = false;
+    }
+
+    try {
+      String dd = birthDate.substring(0, 2);
+      String mm = birthDate.substring(2, 4);
+      String yyyy = birthDate.substring(4, 8);
+
+      int date = Integer.parseInt(dd);
+      int month = Integer.parseInt(mm);
+      int year = Integer.parseInt(yyyy);
+
+      if (date <= 0 || date >= 32) {
+        System.out.println("Inviled date");
+        isValid = false;
+      }
+
+      if (month <= 0 || month >= 13) {
+        System.out.println("Inviled month");
+        isValid = false;
+      }
+
+      if (year <= 1940 || year >= 2021) {
+        System.out.println("Invalid year");
+        isValid = false;
+      }
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+
+    if (!isValid) {
+      System.out.println("Invaled birthdate, Enter the value again");
+      parameters.remove(1);
+      parameterValue.remove(1);
+      addparameter(parameters, parameterValue, "birthdate(DDMMYYYY)");
+      integerValue.add(parameterValue.get(1));
+      birthDateCheck(parameters, parameterValue, integerValue);
+    } else {
+      integerValue.add(parameterValue.get(1));
     }
   }
 }
