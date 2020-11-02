@@ -21,26 +21,33 @@ public class Main {
       ArrayList<String> integerValue = new ArrayList<String>();
       HashSet<String> oldPasswords = new HashSet<String>();
 
+      /** Adding parameters Name and dateofbirth here. */
       addparameter(parameters, parameterValue, "Name");
       addparameter(parameters, parameterValue, "birthdate(DDMMYYYY)");
 
+      /** Checking the format of date of birthday. */
       birthDateCheck(parameters, parameterValue, integerValue);
 
+      /** Adding names of Father and mother in parameters */
       addparameter(parameters, parameterValue, "Father's Name");
       addparameter(parameters, parameterValue, "Mother's Name");
       addparameter(parameters, parameterValue, "Important Person");
 
+      /** List of special characteres to be added in password. */
       char[] specialchar = {'@', '$', '.', '/', ' ', ',', '&'};
-      String currentpath = System.getProperty("user.dir") + "\\Password List\\";
 
+      /** Extracting current directory to create the password file. */
+      String currentpath = System.getProperty("user.dir") + "\\Password List\\";
       String file = currentpath + parameterValue.get(0) + ".txt";
 
       fw = new FileWriter(file, true);
 
+      /** Adding different formats of birthdate in intergerValue List. */
       formatbirthdate(integerValue);
 
+      /** Running loop for every format of DOB in intergerValue. */
       for (int k = 0; k < integerValue.size(); k++) {
-        String birthdate = integerValue.get(k);
+        String birthdate = integerValue.get(k); // Store birthdate temporarily
         for (int i = 0; i < birthdate.length(); i++) {
           for (int j = i; j <= birthdate.length(); j++) {
             if (j >= i) {
@@ -53,17 +60,20 @@ public class Main {
                   password = name + specialchar[s] + birthdate.substring(i, j);
                   writeIfUnique(oldPasswords, password);
 
+                  // name in password in lower case
                   if (name != name.toLowerCase()) {
                     password = name.toLowerCase() + specialchar[s] + birthdate.substring(i, j);
                     writeIfUnique(oldPasswords, password);
                   }
 
-                  if (name != name.toLowerCase()) {
+                  // name in password in upper case
+                  if (name != name.toUpperCase()) {
                     password = name.toUpperCase() + specialchar[s] + birthdate.substring(i, j);
                     writeIfUnique(oldPasswords, password);
                   }
                 }
 
+                /** Method to add special characters. */
                 for (int s1 = 0; s1 < specialchar.length; s1++) {
                   for (int s2 = 0; s2 < specialchar.length; s2++) {
                     password = name + specialchar[s1] + birthdate.substring(i, j) + specialchar[s2];
@@ -105,6 +115,13 @@ public class Main {
     System.out.println("Written");
   }
 
+  /**
+   * Method that gets value and add in parameter, parameterValue, parameter name.
+   *
+   * @param parameter set of parameter.
+   * @param parameterValue parameter value for that parameter.
+   * @param parameterName parameter to be added in the set.
+   */
   private static void addparameter(
       ArrayList<String> parameter, ArrayList<String> parameterValue, String parameterName) {
     parameter.add(parameterName);
@@ -112,6 +129,11 @@ public class Main {
     parameterValue.add(sc.nextLine());
   }
 
+  /**
+   * Adding birthdate parameter and formatting it in different formats.
+   *
+   * @param birthdate Birthdate of target.
+   */
   private static void formatbirthdate(ArrayList<String> birthdate) {
 
     String orignalBirthdate = birthdate.get(0);
@@ -144,6 +166,12 @@ public class Main {
     }
   }
 
+  /**
+   * Function to add only unique passwords.
+   *
+   * @param oldPasswords Set of old passwords.
+   * @param newPassword New password to be added.
+   */
   private static void writeIfUnique(HashSet<String> oldPasswords, String newPassword) {
     int size = oldPasswords.size();
     oldPasswords.add(newPassword);
@@ -158,6 +186,13 @@ public class Main {
     }
   }
 
+  /**
+   * Check if birthdate is valid.
+   *
+   * @param parameters set of parameter.
+   * @param parameterValue parameter value for that parameter.
+   * @param integerValue integer value of that parameter in string.
+   */
   private static void birthDateCheck(
       ArrayList<String> parameters,
       ArrayList<String> parameterValue,
